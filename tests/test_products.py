@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:8080"
 
 def test_get_all_products():
     r = requests.get(f"{BASE_URL}/products")
