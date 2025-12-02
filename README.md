@@ -8,14 +8,16 @@ GET http://localhost:8000/products
 
 pytest -v
 
-# 1
+# 1 START THE API
 cd app
-uvicorn app:app --reload --port 8001
+uvicorn app:app --reload --port 8000
 
-# 2  
+# 2  RUN POSTMAN NEWMAN TESTS
 cd postmanTest
 ./run-tests.sh
 
-# 3 
-cd pytest
+# 3 RUN PYTEST
+cd ..
+.\venv\Scripts\activate
 pytest -vv
+
