@@ -1,14 +1,12 @@
 # Store API 
 
 ## Descrição
-Este projeto é uma **API de produtos** desenvolvida com **FastAPI** para fins de estudo e prática de **Quality Assurance (QA)**.  
-A API implementa um CRUD básico de produtos e está acompanhada de uma suíte de testes automatizados utilizando **PyTest** e **Newman (Postman CLI)**, com geração de relatórios em **HTML**.
+Este projeto é uma **API de produtos** desenvolvida com **FastAPI** para fins de estudo e prática de **Quality Assurance (QA)**. A API implementa um CRUD básico de produtos e está acompanhada de uma suíte de testes automatizados utilizando **PyTest** e **Newman (Postman CLI)**, com geração de relatórios em **HTML**.
 
 ---
 
-## Endpoints da API
+## Funcionalidades da API
 
-### Produtos
 - **GET /products**  
   Retorna a lista de todos os produtos cadastrados.
 
@@ -29,13 +27,6 @@ A API implementa um CRUD básico de produtos e está acompanhada de uma suíte d
 - **DELETE /products/{id}**  
   Remove um produto existente pelo seu `id`.  
   - Exemplo: `/products/2`
-
-
-## Funcionalidades da API
-- **GET /products** → Lista todos os produtos  
-- **GET /products/{id}** → Retorna um produto específico  
-- **POST /products** → Cria um novo produto  
-- **DELETE /products/{id}** → Remove um produto existente  
 
 ## Testes implementados
 - **Funcionais:** CRUD completo de produtos
@@ -75,12 +66,12 @@ APIQA/
 ```
 
 ## Como executar
-⚠️ Observação: Os scripts `setup.bat` e `run_api.bat` foram criados para ambientes **Windows** e devem ser executados via **Prompt de Comando (CMD)**.  
-Em sistemas Linux/Mac, será necessário adaptar os comandos para shell scripts (`.sh`).
+⚠️ Observação: Os scripts `setup.bat` e `run_api.bat` foram criados para ambientes **Windows** e devem ser executados via **Prompt de Comando (CMD)**. Em sistemas Linux/Mac, será necessário adaptar os comandos para shell scripts (`.sh`).
 
 ### 1. Setup do ambiente(Windows CMD)
 ```bash
 setup.bat
+#Executa o Virtual environment do python para evitar conflitos de versões e libs
 ```
 
 ### 2. Subir a API
