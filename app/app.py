@@ -8,7 +8,11 @@ class Product(BaseModel):
     title: str
     price: float
 
-# Banco fake (em memória)
+class ProductCreate(BaseModel):
+    title: str
+    price: float
+
+# Fake DB
 db = [
     Product(id=1, title="Camisa", price=50),
     Product(id=2, title="Calça", price=120),
@@ -26,13 +30,11 @@ def get_product(product_id: int):
     raise HTTPException(404, "Product not found")
 
 @app.post("/products")
-def create_product(prod: Product):
-    # Valida duplicado
-    for p in db:
-        if p.id == prod.id:
-            raise HTTPException(400, "ID duplicado")
-    db.append(prod)
-    return prod
+def create_product(prod: ProductCreate):
+    new_id = max(p.id for p in db) + 1 if db else 1
+    new_prod = Product(id=new_id, **prod.dict())
+    db.append(new_prod)
+    return new_prod
 
 @app.delete("/products/{product_id}")
 def delete_product(product_id: int):

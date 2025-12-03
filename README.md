@@ -13,6 +13,7 @@ cd app
 uvicorn app:app --reload --port 8000
 
 # 2  RUN POSTMAN NEWMAN TESTS
+gitbash
 cd postmanTest
 ./run-tests.sh
 
