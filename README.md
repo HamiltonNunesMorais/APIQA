@@ -1,24 +1,78 @@
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app:app --reload
-python app.py
+# Store API 
 
-GET http://localhost:8000/products
+## Descrição
+Este projeto é uma **API de produtos** desenvolvida com **FastAPI** para fins de estudo e prática de **Quality Assurance (QA)**.  
+A API implementa um CRUD básico de produtos e está acompanhada de uma suíte de testes automatizados utilizando **PyTest** e **Newman (Postman CLI)**, com geração de relatórios em **HTML**.
 
-pytest -v
+---
 
-# 1 START THE API
-cd app
-uvicorn app:app --reload --port 8000
+## Funcionalidades da API
+- **GET /products** → Lista todos os produtos  
+- **GET /products/{id}** → Retorna um produto específico  
+- **POST /products** → Cria um novo produto  
+- **DELETE /products/{id}** → Remove um produto existente  
 
-# 2  RUN POSTMAN NEWMAN TESTS
-gitbash
-cd postmanTest
-./run-tests.sh
+## Testes implementados
+- **Funcionais:** CRUD completo de produtos
+- **Negativos:** Campos obrigatórios ausentes, tipos inválidos, rotas inexistentes
+- **Contratos:** Validação de schema (id, title, price)
+- **End-to-End (E2E):** Criação → Consulta → Listagem → Exclusão
 
-# 3 RUN PYTEST
-cd ..
-.\venv\Scripts\activate
-pytest -vv
+### Newman:
+![alt text](image.png)
+
+### Pytest:
+![alt text](image-1.png)
+
+## Estrutura do projeto 
+```bash
+
+APIQA/
+│── app/                # Código da API
+│── tests/              # Testes automatizados (PyTest)
+│── postman/            # Coleções Postman
+│── reports/            # Relatórios HTML gerados
+│── setup.bat           # Script para setup do ambiente
+│── run_api.bat         # Script para subir a API
+│── run_tests.bat       # Script para rodar testes PyTest
+│── run_postman_test.bat# Script para rodar testes Newman
+│── README.md           # Documentação do projeto
+```
+
+
+## Modelo de produto:
+```json
+{
+  "id": 1,
+  "title": "Camisa",
+  "price": 50.0
+}
+```
+
+## Como executar
+⚠️ Observação: Os scripts `setup.bat` e `run_api.bat` foram criados para ambientes **Windows** e devem ser executados via **Prompt de Comando (CMD)**.  
+Em sistemas Linux/Mac, será necessário adaptar os comandos para shell scripts (`.sh`).
+
+### 1. Setup do ambiente(Windows CMD)
+```bash
+setup.bat
+```
+
+### 2. Subir a API
+```bash
+run_api.bat
+```
+
+### 3. Rodar testes PyTest
+```bash
+run_tests.bat
+#Relatório gerado em: reports/test_report.html
+```
+
+### 4. Rodar testes Postman (Newman)
+```bash
+run_postman_test.bat
+#Relatório gerado em: postman/results/
+```
+
 
