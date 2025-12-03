@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "577ba6aa-fca1-4814-9183-dc885b84720a",
+		"name": "QA-FAST-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET ALL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each product has required fields\", function () {\r",
+							"    pm.response.json().forEach(item => {\r",
+							"        pm.expect(item).to.have.property(\"id\");\r",
+							"        pm.expect(item).to.have.property(\"title\");\r",
+							"        pm.expect(item).to.have.property(\"price\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET  VALID PRODUCT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const schema = {\r",
+							"  type: \"object\",\r",
+							"  properties: {\r",
+							"    id: { type: \"number\" },\r",
+							"    title: { type: \"string\" },\r",
+							"    price: { type: \"number\" }\r",
+							"  },\r",
+							"  required: [\"id\", \"title\", \"price\"]\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Contract is valid\", () => {\r",
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET INVALID PRODUCT BY ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 404 for invalid ID\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has error message field\", function () {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json).to.have.property(\"detail\").to.include(\"not\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products/999",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE PRODUCT MANUAL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product schema is valid\", function () {\r",
+							"    const schema = {\r",
+							"        type: \"object\",\r",
+							"        properties: {\r",
+							"            id: { type: \"number\" },\r",
+							"            title: { type: \"string\" },\r",
+							"            price: { type: \"number\" }\r",
+							"        },\r",
+							"        required: [\"id\", \"title\", \"price\"]\r",
+							"    };\r",
+							"\r",
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Tenis\",\r\n  \"price\": 300\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/products",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE PRODUCT AUTO",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let createdId = pm.response.json().id;\r",
+							"pm.collectionVariables.set(\"newProductId\", createdId);\r",
+							"\r",
+							"pm.test(\"Returned ID is numeric\", () => {\r",
+							"    pm.expect(createdId).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status Created\", () => {\r",
+							"    pm.expect([200, 201]).to.include(pm.response.code);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Returned ID matches created ID\", () => {\r",
+							"    pm.expect(pm.response.json().id).to.eql(pm.collectionVariables.get(\"newProductId\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let newId = Math.floor(Math.random() * 100000);\r",
+							"let title = \"Product_\" + newId;\r",
+							"\r",
+							"pm.collectionVariables.set(\"newProductId\", newId);\r",
+							"pm.collectionVariables.set(\"newProductTitle\", title);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"{{newProductTitle}}\",\r\n  \"price\": 99.90\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/products",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET NEW PRODUCT ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct product returned\", () => {\r",
+							"    pm.expect(pm.response.json().id).to.eql(pm.collectionVariables.get(\"newProductId\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products/{{newProductId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products",
+						"{{newProductId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET NEW PRODUCT ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete OK\", () => {\r",
+							"    pm.expect([200, 204]).to.include(pm.response.code);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products/{{newProductId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products",
+						"{{newProductId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET after DELETION",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`Product ${pm.collectionVariables.get(\"newProductId\")} deleted successfully`, () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/products/{{newProductId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"products",
+						"{{newProductId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "newProductId",
+			"value": ""
+		},
+		{
+			"key": "newProductTitle",
+			"value": ""
+		}
+	]
+}
