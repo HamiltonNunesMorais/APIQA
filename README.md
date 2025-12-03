@@ -86,6 +86,7 @@ setup.bat
 ### 2. Subir a API
 ```bash
 run_api.bat
+#URL: http://localhost:8000/products
 ```
 
 ### 3. Rodar testes PyTest
