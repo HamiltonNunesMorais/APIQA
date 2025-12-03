@@ -6,6 +6,31 @@ A API implementa um CRUD básico de produtos e está acompanhada de uma suíte d
 
 ---
 
+## Endpoints da API
+
+### Produtos
+- **GET /products**  
+  Retorna a lista de todos os produtos cadastrados.
+
+- **GET /products/{id}**  
+  Retorna um produto específico pelo seu `id`.  
+  - Exemplo: `/products/1`
+
+- **POST /products**  
+  Cria um novo produto.  
+  - Corpo da requisição (JSON):
+    ```json
+    {
+      "title": "Tênis",
+      "price": 200.0
+    }
+    ```
+
+- **DELETE /products/{id}**  
+  Remove um produto existente pelo seu `id`.  
+  - Exemplo: `/products/2`
+
+
 ## Funcionalidades da API
 - **GET /products** → Lista todos os produtos  
 - **GET /products/{id}** → Retorna um produto específico  
