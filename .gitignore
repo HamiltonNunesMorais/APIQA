@@ -1,26 +1,27 @@
-# Ambiente virtual
+# Virtual environments
 venv/
-.env
+.env/
+env
 
-# Cache do Python
+# Python cache
 __pycache__/
 *.py[cod]
 *.pyo
 
-# Arquivos de log e temporários
+# Logs / temp files
 *.log
 *.tmp
 *.swp
 
-# Configurações do editor
+# Editor settings
 .vscode/
 .idea/
 
-# Arquivos de sistema
+# OS-generated files
 .DS_Store
 Thumbs.db
 
-# Ignorar arquivos gerados por ferramentas
-*.coverage
-*.pytest_cache/
+# Coverage & test cache
+.coverage
+pytest_cache/
 .cache/
