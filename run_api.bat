@@ -4,10 +4,8 @@ echo ====================================
 echo 🚀 Starting FastAPI (dev mode)...
 echo ====================================
 
-cd app
+call venv\Scripts\activate
 
-call ..\venv\Scripts\activate
+uvicorn app.main:app --reload
 
-uvicorn app:app --reload
 
-cd ..

@@ -1,9 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "id": { "type": "number" },
-    "title": { "type": "string" },
-    "price": { "type": "number" }
-  },
-  "required": ["id", "title", "price"]
-}
