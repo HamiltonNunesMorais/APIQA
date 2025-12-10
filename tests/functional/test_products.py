@@ -1,5 +1,6 @@
 import requests
-from .conftest import BASE_URL, validate_schema
+from tests.conftest import BASE_URL, validate_schema
+
 
 
 product_schema = {
